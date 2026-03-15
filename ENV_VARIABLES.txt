@@ -1,0 +1,30 @@
+========================================
+NETLIFY ENVIRONMENT VARIABLES
+========================================
+
+Copy these values into Netlify:
+Site Settings → Environment variables → Add a variable
+
+----------------------------------------
+Variable 1:
+----------------------------------------
+Key: GOOGLE_SERVICE_ACCOUNT
+
+Value: (Run this command to get the value)
+cat /Users/henry/.openclaw/workspace/teamltd-command-center/service-account.json
+
+Copy the ENTIRE JSON output that appears.
+
+----------------------------------------
+Variable 2:
+----------------------------------------
+Key: GA_PROPERTY_ID
+
+Value: 333133275
+
+========================================
+IMPORTANT: 
+- Both variables are REQUIRED
+- Set scope to "All" (same value for all deploy contexts)
+- After adding, trigger a new deploy
+========================================
