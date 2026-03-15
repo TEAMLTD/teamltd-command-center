@@ -309,6 +309,14 @@
                     impressions: parseInt(insights.impressions || 0).toLocaleString()
                 });
                 
+                // Display funnel
+                displayFunnel({
+                    landingPageViews: parseInt(landingPageViews),
+                    addToCart: parseInt(addToCart),
+                    initiateCheckout: parseInt(initiateCheckout),
+                    purchases: parseInt(purchases)
+                });
+                
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('lastUpdated').textContent = `Last updated: ${new Date().toLocaleString()}`;
                 
@@ -333,6 +341,52 @@
                 { label: 'CPM', value: `$${data.cpm}`, type: 'neutral' },
                 { label: 'CPC', value: `$${data.cpc}`, type: 'neutral' },
                 { label: 'Impressions', value: data.impressions, type: 'neutral' }
+            ];
+            
+            metricsContainer.innerHTML = metrics.map(metric => `
+                <div class="metric-card ${metric.type}">
+                    <div class="metric-label">${metric.label}</div>
+                    <div class="metric-value">${metric.value}</div>
+                    <div class="metric-subtext">${currentDateRange === 'yesterday' ? 'Yesterday' : currentDateRange === 'last_7d' ? 'Last 7 days' : 'Last 30 days'}</div>
+                </div>
+            `).join('');
+        }
+        
+        // Load data on page load
+        fetchMetrics();
+        
+        // Refresh every 5 minutes
+        setInterval(fetchMetrics, 5 * 60 * 1000);
+    </script>
+</body>
+</html>
+   { label: 'Initiated Checkout', value: data.initiateCheckout, type: 'checkout' },
+                { label: 'Purchases', value: data.purchases, type: 'purchase' }
+            ];
+            
+            funnelContainer.innerHTML = funnelSteps.map(step => {
+                const percentage = maxValue > 0 ? (step.value / maxValue) * 100 : 0;
+                return `
+                    <div class="funnel-row">
+                        <div class="funnel-label">${step.label}</div>
+                        <div class="funnel-bar-container">
+                            <div class="funnel-bar ${step.type}" style="width: ${percentage}%"></div>
+                        </div>
+                        <div class="funnel-value">${step.value.toLocaleString()}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // Load data on page load
+        fetchMetrics();
+        
+        // Refresh every 5 minutes
+        setInterval(fetchMetrics, 5 * 60 * 1000);
+    </script>
+</body>
+</html>
+ue: data.impressions, type: 'neutral' }
             ];
             
             metricsContainer.innerHTML = metrics.map(metric => `
