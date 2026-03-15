@@ -49,18 +49,39 @@
         
         .date-filters {
             display: flex;
-            gap: 10px;
+            gap: 8px;
+            flex-wrap: wrap;
         }
         
         .date-btn {
-            padding: 8px 16px;
+            padding: 8px 12px;
             background: #2a2a2a;
             border: 1px solid #3a3a3a;
             color: #fff;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 11px;
             transition: all 0.2s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .date-btn {
+                padding: 6px 10px;
+                font-size: 10px;
+            }
+            
+            .header {
+                padding: 15px 20px;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            
+            .date-filters {
+                width: 100%;
+                justify-content: center;
+            }
         }
         
         .date-btn:hover {
