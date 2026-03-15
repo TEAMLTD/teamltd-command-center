@@ -316,6 +316,13 @@
     </div>
 
     <div class="section">
+        <div class="section-title">Google Analytics</div>
+        <div id="ga-loading" class="loading">Loading data...</div>
+        <div id="ga-error" class="error" style="display: none;"></div>
+        <div id="ga-metrics" class="metrics-grid"></div>
+    </div>
+
+    <div class="section">
         <div class="section-title">Shopify</div>
         <div class="placeholder">
             <div class="placeholder-title">Coming Soon</div>
@@ -347,6 +354,7 @@
             
             // Reload data
             fetchMetrics();
+            fetchGAMetrics();
         }
         
         function displayMetrics(data) {
@@ -469,11 +477,63 @@
             }
         }
         
+        // Google Analytics Functions
+        function displayGAMetrics(data) {
+            const gaMetricsContainer = document.getElementById('ga-metrics');
+            
+            const metrics = [
+                { label: 'Sessions', value: data.sessions.toLocaleString(), type: 'neutral' },
+                { label: 'Users', value: data.users.toLocaleString(), type: 'neutral' },
+                { label: 'Page Views', value: data.pageViews.toLocaleString(), type: 'neutral' },
+                { label: 'E-commerce Transactions', value: data.transactions.toLocaleString(), type: 'positive' },
+                { label: 'Revenue', value: `$${data.revenue.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, type: 'positive' },
+                { label: 'Avg Session Duration', value: `${Math.round(data.avgSessionDuration)}s`, type: 'neutral' },
+                { label: 'Bounce Rate', value: `${data.bounceRate.toFixed(2)}%`, type: 'negative' }
+            ];
+            
+            gaMetricsContainer.innerHTML = metrics.map(metric => `
+                <div class="metric-card ${metric.type}">
+                    <div class="metric-label">${metric.label}</div>
+                    <div class="metric-value">${metric.value}</div>
+                    <div class="metric-subtext">${currentDateRange === 'yesterday' ? 'Yesterday' : currentDateRange === 'last_7d' ? 'Last 7 days' : 'Last 30 days'}</div>
+                </div>
+            `).join('');
+        }
+        
+        async function fetchGAMetrics() {
+            try {
+                document.getElementById('ga-loading').style.display = 'block';
+                document.getElementById('ga-metrics').innerHTML = '';
+                document.getElementById('ga-error').style.display = 'none';
+                
+                const response = await fetch(`/.netlify/functions/ga-data?dateRange=${currentDateRange}`);
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to fetch Google Analytics data');
+                }
+                
+                displayGAMetrics(data);
+                
+                document.getElementById('ga-loading').style.display = 'none';
+                
+            } catch (error) {
+                document.getElementById('ga-loading').style.display = 'none';
+                document.getElementById('ga-error').style.display = 'block';
+                document.getElementById('ga-error').textContent = `Error loading Google Analytics data: ${error.message}`;
+                console.error('GA Error:', error);
+            }
+        }
+        
         // Load data on page load
         fetchMetrics();
+        fetchGAMetrics();
         
         // Refresh every 5 minutes
-        setInterval(fetchMetrics, 5 * 60 * 1000);
+        setInterval(() => {
+            fetchMetrics();
+            fetchGAMetrics();
+        }, 5 * 60 * 1000);
     </script>
 </body>
 </html>

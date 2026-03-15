@@ -5,8 +5,8 @@ A real-time Meta Ads dashboard that pulls performance data directly from the Fac
 ## Features
 
 - **Real-time data**: Pulls fresh metrics every 5 minutes
-- **No server needed**: Runs entirely in the browser
-- **7-day metrics**: Website Purchases, Revenue, Spend, ROAS, Link Clicks, CTR, CPM, CPC, Impressions
+- **Meta Ads metrics**: Website Purchases, Revenue, Spend, ROAS, Link Clicks, CTR, CPM, CPC, Impressions
+- **Google Analytics**: Sessions, Users, Page Views, E-commerce Transactions, Revenue, Avg Session Duration, Bounce Rate
 - **Auto-refresh**: Updates automatically
 - **Clean design**: TEAMLTD branded with company logo
 
@@ -26,10 +26,23 @@ A real-time Meta Ads dashboard that pulls performance data directly from the Fac
    netlify deploy --prod --dir .
    ```
 
-3. **Or deploy via drag-and-drop**:
+3. **Configure Environment Variables** (Required for Google Analytics):
+   - Go to Site settings → Environment variables
+   - Add the following variables:
+   
+   **GOOGLE_SERVICE_ACCOUNT**
+   - Copy the entire contents of `service-account.json`
+   - Paste as a single-line string (the JSON content)
+   - Example: `{"type":"service_account","project_id":"teamltd-439223",...}`
+   
+   **GA_PROPERTY_ID**
+   - Value: `333133275`
+
+4. **Or deploy via drag-and-drop**:
    - Go to https://app.netlify.com/drop
    - Drag the entire `teamltd-command-center` folder
    - Site will be live immediately
+   - Configure environment variables as described in step 3
 
 ### Manual Upload
 
@@ -38,6 +51,7 @@ A real-time Meta Ads dashboard that pulls performance data directly from the Fac
 3. Drag the `teamltd-command-center` folder into the upload area
 4. Your site will be live at a random URL (e.g., `https://random-name-123.netlify.app`)
 5. Rename it: Site settings → Change site name → `teamltd-command-center`
+6. **Important**: Configure environment variables (see step 3 above)
 
 ## Configuration
 
@@ -64,6 +78,8 @@ python3 -m http.server 8000
 
 ## Metrics Displayed
 
+### Meta Ads
+
 | Metric | Description |
 |--------|-------------|
 | Website Purchases | Total purchase conversions |
@@ -75,6 +91,18 @@ python3 -m http.server 8000
 | CPM | Cost per 1000 impressions |
 | CPC | Cost per click |
 | Impressions | Total impressions |
+
+### Google Analytics
+
+| Metric | Description |
+|--------|-------------|
+| Sessions | Total sessions |
+| Users | Total unique users |
+| Page Views | Total page views |
+| E-commerce Transactions | Total transactions |
+| Revenue | Total revenue from transactions |
+| Avg Session Duration | Average session duration (seconds) |
+| Bounce Rate | Percentage of single-page sessions |
 
 ## Cost
 

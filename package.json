@@ -1,0 +1,8 @@
+{
+  "name": "teamltd-command-center",
+  "version": "1.0.0",
+  "description": "TEAMLTD Command Center Dashboard",
+  "dependencies": {
+    "googleapis": "^144.0.0"
+  }
+}

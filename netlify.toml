@@ -1,0 +1,15 @@
+[build]
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Environment variables configuration
+# Set these in Netlify UI: Site settings > Environment variables
+# 
+# Required environment variables:
+# 1. GOOGLE_SERVICE_ACCOUNT (string) - Full JSON contents of service-account.json file
+#    Example: {"type":"service_account","project_id":"...","private_key_id":"..."}
+# 
+# 2. GA_PROPERTY_ID (string) - Google Analytics Property ID
+#    Value: 333133275
