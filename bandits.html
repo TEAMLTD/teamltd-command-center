@@ -85,151 +85,18 @@
             z-index: 1;
         }
 
-        /* CSS-based 3D icons with frosted glass + chrome aesthetic */
+        /* Photorealistic 3D render images */
         .icon-3d {
-            width: 200px;
-            height: 200px;
+            width: 280px;
+            height: 280px;
             position: relative;
             filter: drop-shadow(0 20px 40px rgba(0,0,0,0.8));
         }
 
-        /* Henry - Chrome Gears */
-        .icon-gears {
-            background: linear-gradient(135deg, #e0e0e0 0%, #a0a0a0 50%, #707070 100%);
-            border-radius: 50%;
-            position: relative;
-            animation: rotate 8s linear infinite;
-        }
-        .icon-gears::before {
-            content: '';
-            position: absolute;
-            inset: 20%;
-            background: linear-gradient(135deg, #c0c0c0 0%, #808080 50%, #606060 100%);
-            border-radius: 50%;
-        }
-        .icon-gears::after {
-            content: '';
-            position: absolute;
-            inset: 40%;
-            background: #000;
-            border-radius: 50%;
-        }
-
-        /* Buddy - Glass Robot */
-        .icon-robot {
-            background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.05) 100%);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 20px;
-            position: relative;
-        }
-        .icon-robot::before {
-            content: '';
-            position: absolute;
-            top: 30%;
-            left: 25%;
-            width: 20%;
-            height: 20%;
-            background: #00ff88;
-            border-radius: 50%;
-            box-shadow: 0 0 20px #00ff88;
-        }
-        .icon-robot::after {
-            content: '';
-            position: absolute;
-            top: 30%;
-            right: 25%;
-            width: 20%;
-            height: 20%;
-            background: #00ff88;
-            border-radius: 50%;
-            box-shadow: 0 0 20px #00ff88;
-        }
-
-        /* Designer - Diamond Prism */
-        .icon-diamond {
-            width: 0;
-            height: 0;
-            border-left: 100px solid transparent;
-            border-right: 100px solid transparent;
-            border-bottom: 180px solid #ff00ff;
-            position: relative;
-            filter: drop-shadow(0 0 30px #ff00ff);
-            animation: pulse-glow 3s ease-in-out infinite;
-        }
-
-        /* Builder - Digital Cube */
-        .icon-cube {
-            background: linear-gradient(135deg, rgba(0,100,255,0.3) 0%, rgba(0,50,200,0.5) 100%);
-            border: 2px solid rgba(0,150,255,0.6);
-            backdrop-filter: blur(5px);
-            transform: rotateX(45deg) rotateZ(45deg);
-            box-shadow: 0 0 40px rgba(0,100,255,0.6);
-        }
-
-        /* Librarian - Magnifying Glass */
-        .icon-magnifier {
-            width: 120px;
-            height: 120px;
-            border: 8px solid #c0c0c0;
-            border-radius: 50%;
-            position: relative;
-            margin-left: 40px;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
-        }
-        .icon-magnifier::after {
-            content: '';
-            position: absolute;
-            bottom: -80px;
-            right: -20px;
-            width: 12px;
-            height: 100px;
-            background: linear-gradient(180deg, #e0e0e0 0%, #808080 100%);
-            border-radius: 6px;
-            transform: rotate(-45deg);
-        }
-
-        /* Copywriter - Fountain Pen */
-        .icon-pen {
-            width: 20px;
-            height: 180px;
-            background: linear-gradient(180deg, #e0e0e0 0%, #808080 50%, #404040 100%);
-            border-radius: 10px;
-            position: relative;
-            margin: auto;
-        }
-        .icon-pen::before {
-            content: '';
-            position: absolute;
-            bottom: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-top: 30px solid #404040;
-        }
-        .icon-pen::after {
-            content: '';
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 30px;
-            height: 20px;
-            background: #c0c0c0;
-            border-radius: 50% 50% 0 0;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes pulse-glow {
-            0%, 100% { filter: drop-shadow(0 0 30px #ff00ff); }
-            50% { filter: drop-shadow(0 0 50px #ff00ff); }
+        .icon-3d img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
     </style>
 </head>
@@ -258,7 +125,7 @@
                                     <h2 class="text-3xl text-white montserrat-bold-italic">HENRY</h2>
                                 </div>
                                 <div class="flex items-center justify-center flex-1 z-10">
-                                    <div class="icon-3d icon-gears"></div>
+                                    <div class="icon-3d"><img src="henry-architect.png" alt="Henry - The Architect" /></div>
                                 </div>
                             </div>
                             <!-- Back -->
@@ -285,7 +152,7 @@
                                     <h2 class="text-3xl text-white montserrat-bold-italic">BUDDY</h2>
                                 </div>
                                 <div class="flex items-center justify-center flex-1 z-10">
-                                    <div class="icon-3d icon-robot"></div>
+                                    <div class="icon-3d"><img src="buddy-companion.png" alt="Buddy - Learning Companion" /></div>
                                 </div>
                             </div>
                             <div class="card-face card-back p-8 flex flex-col justify-between relative">
@@ -311,7 +178,7 @@
                                     <h2 class="text-3xl text-white montserrat-bold-italic">VISUAL DESIGNER</h2>
                                 </div>
                                 <div class="flex items-center justify-center flex-1 z-10">
-                                    <div class="icon-3d icon-diamond"></div>
+                                    <div class="icon-3d"><img src="designer-prism.png" alt="Visual Designer" /></div>
                                 </div>
                             </div>
                             <div class="card-face card-back p-8 flex flex-col justify-between relative">
@@ -337,7 +204,7 @@
                                     <h2 class="text-3xl text-white montserrat-bold-italic">CODE BUILDER</h2>
                                 </div>
                                 <div class="flex items-center justify-center flex-1 z-10">
-                                    <div class="icon-3d icon-cube"></div>
+                                    <div class="icon-3d"><img src="builder-cube.png" alt="Code Builder" /></div>
                                 </div>
                             </div>
                             <div class="card-face card-back p-8 flex flex-col justify-between relative">
@@ -363,7 +230,7 @@
                                     <h2 class="text-3xl text-white montserrat-bold-italic">THE LIBRARIAN</h2>
                                 </div>
                                 <div class="flex items-center justify-center flex-1 z-10">
-                                    <div class="icon-3d icon-magnifier"></div>
+                                    <div class="icon-3d"><img src="librarian-magnifier.png" alt="The Librarian" /></div>
                                 </div>
                             </div>
                             <div class="card-face card-back p-8 flex flex-col justify-between relative">
@@ -389,7 +256,7 @@
                                     <h2 class="text-3xl text-white montserrat-bold-italic">THE COPYWRITER</h2>
                                 </div>
                                 <div class="flex items-center justify-center flex-1 z-10">
-                                    <div class="icon-3d icon-pen"></div>
+                                    <div class="icon-3d"><img src="copywriter-pen.png" alt="The Copywriter" /></div>
                                 </div>
                             </div>
                             <div class="card-face card-back p-8 flex flex-col justify-between relative">
