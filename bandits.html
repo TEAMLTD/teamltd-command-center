@@ -87,19 +87,30 @@
 
         /* Fallback for mobile: explicit visibility control */
         @media (max-width: 767px) {
+            .card {
+                transform: none !important;
+            }
+            
+            /* Default state: front visible, back hidden */
             .card__face {
+                transition: opacity 0.4s ease;
                 opacity: 1;
             }
+            
+            .card__face--back {
+                opacity: 0;
+                pointer-events: none;
+            }
+            
+            /* Flipped state: front hidden, back visible */
             .card-flipped .card__face:not(.card__face--back) {
                 opacity: 0;
                 pointer-events: none;
             }
-            .card:not(.card-flipped) .card__face--back {
-                opacity: 0;
-                pointer-events: none;
-            }
-            .card {
-                transform: none !important;
+            
+            .card-flipped .card__face--back {
+                opacity: 1;
+                pointer-events: auto;
             }
         }
 
