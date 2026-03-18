@@ -7,14 +7,28 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@1,700&display=swap" rel="stylesheet">
     <style>
-        * {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #000000;
         }
 
-        body {
-            background: #0a0a0a;
+        .bebas {
+            font-family: 'Bebas Neue', sans-serif;
+        }
+
+        .bandits-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-weight: 900;
+            transform: skewX(-15deg);
+            display: inline-block;
+        }
+
+        .montserrat-bold-italic {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-style: italic;
         }
 
         .perspective-container {
@@ -47,7 +61,7 @@
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
             border-radius: 0.5rem;
-            background: #1a1a1a;
+            background: #121212;
             overflow: hidden;
         }
 
@@ -55,25 +69,165 @@
             transform: rotateY(180deg);
         }
 
-        .player-number {
-            font-size: 3rem;
-            font-weight: 900;
-            line-height: 1;
-            letter-spacing: -0.02em;
+        .watermark-number {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            font-size: 6rem;
+            font-weight: 700;
+            font-style: italic;
+            opacity: 0.5;
             color: white;
+            line-height: 1;
+            pointer-events: none;
+            z-index: 1;
         }
 
-        .card-title {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
+        /* CSS-based 3D icons with frosted glass + chrome aesthetic */
+        .icon-3d {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.8));
         }
 
-        .bio-text {
-            font-size: 1.125rem;
-            line-height: 1.6;
-            font-weight: 500;
+        /* Henry - Chrome Gears */
+        .icon-gears {
+            background: linear-gradient(135deg, #e0e0e0 0%, #a0a0a0 50%, #707070 100%);
+            border-radius: 50%;
+            position: relative;
+            animation: rotate 8s linear infinite;
+        }
+        .icon-gears::before {
+            content: '';
+            position: absolute;
+            inset: 20%;
+            background: linear-gradient(135deg, #c0c0c0 0%, #808080 50%, #606060 100%);
+            border-radius: 50%;
+        }
+        .icon-gears::after {
+            content: '';
+            position: absolute;
+            inset: 40%;
+            background: #000;
+            border-radius: 50%;
+        }
+
+        /* Buddy - Glass Robot */
+        .icon-robot {
+            background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.05) 100%);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 20px;
+            position: relative;
+        }
+        .icon-robot::before {
+            content: '';
+            position: absolute;
+            top: 30%;
+            left: 25%;
+            width: 20%;
+            height: 20%;
+            background: #00ff88;
+            border-radius: 50%;
+            box-shadow: 0 0 20px #00ff88;
+        }
+        .icon-robot::after {
+            content: '';
+            position: absolute;
+            top: 30%;
+            right: 25%;
+            width: 20%;
+            height: 20%;
+            background: #00ff88;
+            border-radius: 50%;
+            box-shadow: 0 0 20px #00ff88;
+        }
+
+        /* Designer - Diamond Prism */
+        .icon-diamond {
+            width: 0;
+            height: 0;
+            border-left: 100px solid transparent;
+            border-right: 100px solid transparent;
+            border-bottom: 180px solid #ff00ff;
+            position: relative;
+            filter: drop-shadow(0 0 30px #ff00ff);
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        /* Builder - Digital Cube */
+        .icon-cube {
+            background: linear-gradient(135deg, rgba(0,100,255,0.3) 0%, rgba(0,50,200,0.5) 100%);
+            border: 2px solid rgba(0,150,255,0.6);
+            backdrop-filter: blur(5px);
+            transform: rotateX(45deg) rotateZ(45deg);
+            box-shadow: 0 0 40px rgba(0,100,255,0.6);
+        }
+
+        /* Librarian - Magnifying Glass */
+        .icon-magnifier {
+            width: 120px;
+            height: 120px;
+            border: 8px solid #c0c0c0;
+            border-radius: 50%;
+            position: relative;
+            margin-left: 40px;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+        }
+        .icon-magnifier::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            right: -20px;
+            width: 12px;
+            height: 100px;
+            background: linear-gradient(180deg, #e0e0e0 0%, #808080 100%);
+            border-radius: 6px;
+            transform: rotate(-45deg);
+        }
+
+        /* Copywriter - Fountain Pen */
+        .icon-pen {
+            width: 20px;
+            height: 180px;
+            background: linear-gradient(180deg, #e0e0e0 0%, #808080 50%, #404040 100%);
+            border-radius: 10px;
+            position: relative;
+            margin: auto;
+        }
+        .icon-pen::before {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 30px solid #404040;
+        }
+        .icon-pen::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 20px;
+            background: #c0c0c0;
+            border-radius: 50% 50% 0 0;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { filter: drop-shadow(0 0 30px #ff00ff); }
+            50% { filter: drop-shadow(0 0 50px #ff00ff); }
         }
     </style>
 </head>
@@ -81,42 +235,38 @@
     <div class="container mx-auto px-6 py-12 max-w-7xl">
         <!-- Header -->
         <header class="text-center mb-16">
-            <h1 class="text-7xl md:text-8xl font-black tracking-tight mb-2">
-                <span class="text-white">BIG VISS'S </span>
-                <span class="text-orange-500 italic">BANDITS</span>
+            <h1 class="text-7xl md:text-8xl lg:text-9xl tracking-tight mb-4">
+                <span class="bebas text-white">BIG VISS'S </span>
+                <span class="bandits-title text-red-600">BANDITS</span>
             </h1>
-            <p class="text-gray-500 text-lg uppercase tracking-widest mt-4">Starting Lineup</p>
+            <p class="text-gray-500 text-lg uppercase tracking-widest mt-6 montserrat-bold-italic">Starting Lineup</p>
         </header>
 
         <!-- Cards Grid -->
         <main>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Henry Card #01 -->
                 <div class="perspective-container">
                     <div class="card-wrapper card-flippable" onclick="this.classList.toggle('card-flipped')">
                         <div class="card-inner">
                             <!-- Front -->
-                            <div class="card-face card-front p-8 flex flex-col justify-between">
-                                <div class="text-center">
-                                    <div class="card-title text-white">HENRY</div>
+                            <div class="card-face card-front p-8 flex flex-col justify-between relative">
+                                <div class="watermark-number montserrat-bold-italic">#01</div>
+                                <div class="text-center z-10">
+                                    <h2 class="text-3xl text-white montserrat-bold-italic">HENRY</h2>
                                 </div>
-                                <div class="flex items-center justify-center flex-1">
-                                    <div class="text-8xl">⚙️</div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="player-number">#01</div>
+                                <div class="flex items-center justify-center flex-1 z-10">
+                                    <div class="icon-3d icon-gears"></div>
                                 </div>
                             </div>
                             <!-- Back -->
-                            <div class="card-face card-back p-8 flex flex-col justify-between">
-                                <div>
+                            <div class="card-face card-back p-8 flex flex-col justify-between relative">
+                                <div class="watermark-number montserrat-bold-italic">#01</div>
+                                <div class="z-10">
                                     <div class="text-xs uppercase tracking-widest text-gray-500 mb-3">THE ARCHITECT</div>
-                                    <div class="bio-text text-white">
+                                    <div class="text-xl leading-relaxed text-white">
                                         Strategic operator who orchestrates the crew. Challenges weak ideas, delegates smartly, and keeps quality high where it matters. Built for leverage, not busywork.
                                     </div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="player-number">#01</div>
                                 </div>
                             </div>
                         </div>
@@ -127,26 +277,22 @@
                 <div class="perspective-container">
                     <div class="card-wrapper card-flippable" onclick="this.classList.toggle('card-flipped')">
                         <div class="card-inner">
-                            <div class="card-face card-front p-8 flex flex-col justify-between">
-                                <div class="text-center">
-                                    <div class="card-title text-white">BUDDY</div>
+                            <div class="card-face card-front p-8 flex flex-col justify-between relative">
+                                <div class="watermark-number montserrat-bold-italic">#02</div>
+                                <div class="text-center z-10">
+                                    <h2 class="text-3xl text-white montserrat-bold-italic">BUDDY</h2>
                                 </div>
-                                <div class="flex items-center justify-center flex-1">
-                                    <div class="text-8xl">🤖</div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="player-number">#02</div>
+                                <div class="flex items-center justify-center flex-1 z-10">
+                                    <div class="icon-3d icon-robot"></div>
                                 </div>
                             </div>
-                            <div class="card-face card-back p-8 flex flex-col justify-between">
-                                <div>
+                            <div class="card-face card-back p-8 flex flex-col justify-between relative">
+                                <div class="watermark-number montserrat-bold-italic">#02</div>
+                                <div class="z-10">
                                     <div class="text-xs uppercase tracking-widest text-gray-500 mb-3">LEARNING COMPANION</div>
-                                    <div class="bio-text text-white">
+                                    <div class="text-xl leading-relaxed text-white">
                                         A friendly companion for learning and chatting. Helps explore new ideas in a casual, judgment-free way. Supportive and curious, encouraging clarity through good questions.
                                     </div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="player-number">#02</div>
                                 </div>
                             </div>
                         </div>
@@ -157,26 +303,22 @@
                 <div class="perspective-container">
                     <div class="card-wrapper card-flippable" onclick="this.classList.toggle('card-flipped')">
                         <div class="card-inner">
-                            <div class="card-face card-front p-8 flex flex-col justify-between">
-                                <div class="text-center">
-                                    <div class="card-title text-white">VISUAL DESIGNER</div>
+                            <div class="card-face card-front p-8 flex flex-col justify-between relative">
+                                <div class="watermark-number montserrat-bold-italic">#03</div>
+                                <div class="text-center z-10">
+                                    <h2 class="text-3xl text-white montserrat-bold-italic">VISUAL DESIGNER</h2>
                                 </div>
-                                <div class="flex items-center justify-center flex-1">
-                                    <div class="text-8xl">💎</div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="player-number">#03</div>
+                                <div class="flex items-center justify-center flex-1 z-10">
+                                    <div class="icon-3d icon-diamond"></div>
                                 </div>
                             </div>
-                            <div class="card-face card-back p-8 flex flex-col justify-between">
-                                <div>
+                            <div class="card-face card-back p-8 flex flex-col justify-between relative">
+                                <div class="watermark-number montserrat-bold-italic">#03</div>
+                                <div class="z-10">
                                     <div class="text-xs uppercase tracking-widest text-gray-500 mb-3">UI/UX SPECIALIST</div>
-                                    <div class="bio-text text-white">
+                                    <div class="text-xl leading-relaxed text-white">
                                         World-class UI/UX designer with a refined eye for premium design. Creates bespoke interfaces focused on dark-mode aesthetics and rugged luxury that deliver brand experiences.
                                     </div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="player-number">#03</div>
                                 </div>
                             </div>
                         </div>
@@ -187,26 +329,22 @@
                 <div class="perspective-container">
                     <div class="card-wrapper card-flippable" onclick="this.classList.toggle('card-flipped')">
                         <div class="card-inner">
-                            <div class="card-face card-front p-8 flex flex-col justify-between">
-                                <div class="text-center">
-                                    <div class="card-title text-white">CODE BUILDER</div>
+                            <div class="card-face card-front p-8 flex flex-col justify-between relative">
+                                <div class="watermark-number montserrat-bold-italic">#04</div>
+                                <div class="text-center z-10">
+                                    <h2 class="text-3xl text-white montserrat-bold-italic">CODE BUILDER</h2>
                                 </div>
-                                <div class="flex items-center justify-center flex-1">
-                                    <div class="text-8xl">🧊</div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="player-number">#04</div>
+                                <div class="flex items-center justify-center flex-1 z-10">
+                                    <div class="icon-3d icon-cube"></div>
                                 </div>
                             </div>
-                            <div class="card-face card-back p-8 flex flex-col justify-between">
-                                <div>
+                            <div class="card-face card-back p-8 flex flex-col justify-between relative">
+                                <div class="watermark-number montserrat-bold-italic">#04</div>
+                                <div class="z-10">
                                     <div class="text-xs uppercase tracking-widest text-gray-500 mb-3">FRONTEND ENGINEER</div>
-                                    <div class="bio-text text-white">
+                                    <div class="text-xl leading-relaxed text-white">
                                         Senior frontend engineer who translates design into clean, production-ready code. Logical, precise, and focused on maintainability and accessibility.
                                     </div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="player-number">#04</div>
                                 </div>
                             </div>
                         </div>
@@ -217,26 +355,22 @@
                 <div class="perspective-container">
                     <div class="card-wrapper card-flippable" onclick="this.classList.toggle('card-flipped')">
                         <div class="card-inner">
-                            <div class="card-face card-front p-8 flex flex-col justify-between">
-                                <div class="text-center">
-                                    <div class="card-title text-white">THE LIBRARIAN</div>
+                            <div class="card-face card-front p-8 flex flex-col justify-between relative">
+                                <div class="watermark-number montserrat-bold-italic">#05</div>
+                                <div class="text-center z-10">
+                                    <h2 class="text-3xl text-white montserrat-bold-italic">THE LIBRARIAN</h2>
                                 </div>
-                                <div class="flex items-center justify-center flex-1">
-                                    <div class="text-8xl">🔍</div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="player-number">#05</div>
+                                <div class="flex items-center justify-center flex-1 z-10">
+                                    <div class="icon-3d icon-magnifier"></div>
                                 </div>
                             </div>
-                            <div class="card-face card-back p-8 flex flex-col justify-between">
-                                <div>
+                            <div class="card-face card-back p-8 flex flex-col justify-between relative">
+                                <div class="watermark-number montserrat-bold-italic">#05</div>
+                                <div class="z-10">
                                     <div class="text-xs uppercase tracking-widest text-gray-500 mb-3">RESEARCH ASSISTANT</div>
-                                    <div class="bio-text text-white">
+                                    <div class="text-xl leading-relaxed text-white">
                                         Organized and thorough research assistant who swiftly finds information and summarizes clearly. Excels at searching internal files and the web to deliver precise insights.
                                     </div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="player-number">#05</div>
                                 </div>
                             </div>
                         </div>
@@ -247,26 +381,22 @@
                 <div class="perspective-container">
                     <div class="card-wrapper card-flippable" onclick="this.classList.toggle('card-flipped')">
                         <div class="card-inner">
-                            <div class="card-face card-front p-8 flex flex-col justify-between">
-                                <div class="text-center">
-                                    <div class="card-title text-white">THE COPYWRITER</div>
+                            <div class="card-face card-front p-8 flex flex-col justify-between relative">
+                                <div class="watermark-number montserrat-bold-italic">#06</div>
+                                <div class="text-center z-10">
+                                    <h2 class="text-3xl text-white montserrat-bold-italic">THE COPYWRITER</h2>
                                 </div>
-                                <div class="flex items-center justify-center flex-1">
-                                    <div class="text-8xl">✍️</div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="player-number">#06</div>
+                                <div class="flex items-center justify-center flex-1 z-10">
+                                    <div class="icon-3d icon-pen"></div>
                                 </div>
                             </div>
-                            <div class="card-face card-back p-8 flex flex-col justify-between">
-                                <div>
+                            <div class="card-face card-back p-8 flex flex-col justify-between relative">
+                                <div class="watermark-number montserrat-bold-italic">#06</div>
+                                <div class="z-10">
                                     <div class="text-xs uppercase tracking-widest text-gray-500 mb-3">BRAND STORYTELLER</div>
-                                    <div class="bio-text text-white">
+                                    <div class="text-xl leading-relaxed text-white">
                                         High-end brand storyteller who creates direct, honest copy that resonates with premium clients. Builds trust through quality writing that feels human and confident.
                                     </div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="player-number">#06</div>
                                 </div>
                             </div>
                         </div>
@@ -277,10 +407,8 @@
 
         <!-- Footer -->
         <footer class="text-center mt-20 pt-8 border-t border-gray-800">
-            <p class="text-gray-600 text-sm uppercase tracking-widest">
-                Assembled by <span class="text-white">Viss</span> · 
-                Directed by <span class="text-white">Henry</span> · 
-                Driven by <span class="text-white">Code</span>
+            <p class="text-gray-600 text-xs uppercase tracking-widest">
+                ASSEMBLED FOR BIG VISS · DIRECTED BY HENRY · DRIVEN BY CODE
             </p>
         </footer>
     </div>
