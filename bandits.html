@@ -31,7 +31,6 @@
             font-style: italic;
         }
 
-        /* Force grid items to fixed height */
         .card-grid-item {
             height: 600px;
             position: relative;
@@ -79,10 +78,29 @@
             border-radius: 0.5rem;
             background: #121212;
             overflow: hidden;
+            transition: opacity 0.3s;
         }
 
         .card__face--back {
             transform: rotateY(180deg);
+        }
+
+        /* Fallback for mobile: explicit visibility control */
+        @media (max-width: 767px) {
+            .card__face {
+                opacity: 1;
+            }
+            .card-flipped .card__face:not(.card__face--back) {
+                opacity: 0;
+                pointer-events: none;
+            }
+            .card:not(.card-flipped) .card__face--back {
+                opacity: 0;
+                pointer-events: none;
+            }
+            .card {
+                transform: none !important;
+            }
         }
 
         .watermark-number {
