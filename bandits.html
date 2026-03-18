@@ -33,12 +33,16 @@
 
         .perspective-container {
             perspective: 1000px;
+            height: 0;
+            padding-bottom: calc(100% * 3.5 / 2.5);
+            position: relative;
         }
 
         .card-wrapper {
-            position: relative;
+            position: absolute;
+            inset: 0;
             width: 100%;
-            aspect-ratio: 2.5 / 3.5;
+            height: 100%;
             cursor: pointer;
             transform-style: preserve-3d;
         }
