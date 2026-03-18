@@ -326,3 +326,25 @@
     </div>
 </body>
 </html>
+<script>
+// Mobile-specific flip handler
+if (window.innerWidth < 768) {
+    document.querySelectorAll('.card-flippable').forEach(card => {
+        card.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const front = this.querySelector('.card__face:not(.card__face--back)');
+            const back = this.querySelector('.card__face--back');
+            
+            if (this.classList.contains('card-flipped')) {
+                // Show front, hide back
+                front.style.display = 'flex';
+                back.style.display = 'none';
+            } else {
+                // Hide front, show back
+                front.style.display = 'none';
+                back.style.display = 'flex';
+            }
+        });
+    });
+}
+</script>
