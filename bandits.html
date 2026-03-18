@@ -33,13 +33,13 @@
 
         /* Force grid items to fixed height */
         .card-grid-item {
-            height: 500px;
+            height: 600px;
             position: relative;
         }
 
         @media (min-width: 768px) {
             .card-grid-item {
-                height: 450px;
+                height: 500px;
             }
         }
 
@@ -70,9 +70,12 @@
 
         .card__face {
             position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
             border-radius: 0.5rem;
             background: #121212;
             overflow: hidden;
@@ -80,6 +83,12 @@
 
         .card__face--back {
             transform: rotateY(180deg);
+        }
+        
+        /* Force hardware acceleration on mobile */
+        .card, .card__face {
+            -webkit-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
         }
 
         .watermark-number {
