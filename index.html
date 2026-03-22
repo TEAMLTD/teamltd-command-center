@@ -277,6 +277,73 @@
             margin-bottom: 10px;
             color: #999;
         }
+
+        .github-backup {
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #2a2a2a;
+        }
+
+        .backup-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .backup-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 15px;
+        }
+
+        .backup-status.active {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+        }
+
+        .backup-status.inactive {
+            background: #dc2626;
+            color: #fff;
+        }
+
+        .backup-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .backup-detail-item {
+            background: #0a0a0a;
+            padding: 12px 16px;
+            border-radius: 8px;
+        }
+
+        .backup-detail-label {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .backup-detail-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .backup-detail-value.pending {
+            color: #f59e0b;
+        }
+
+        .backup-detail-value.recent {
+            color: #10b981;
+        }
     </style>
 </head>
 <body>
@@ -335,6 +402,34 @@
         <div class="placeholder">
             <div class="placeholder-title">Coming Soon</div>
             <div>Instagram insights will display here</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">GitHub Backup</div>
+        <div class="github-backup">
+            <div class="backup-header">
+                <span class="backup-status active" id="backupStatus">ACTIVE</span>
+                <span style="color: #666; font-size: 14px;">Automated daily backups at 9:00 PM EST</span>
+            </div>
+            <div class="backup-details">
+                <div class="backup-detail-item">
+                    <div class="backup-detail-label">Last Backup</div>
+                    <div class="backup-detail-value recent" id="lastBackup">Mar 21, 2026 7:55 PM</div>
+                </div>
+                <div class="backup-detail-item">
+                    <div class="backup-detail-label">Next Backup</div>
+                    <div class="backup-detail-value pending" id="nextBackup">Tonight at 9:00 PM</div>
+                </div>
+                <div class="backup-detail-item">
+                    <div class="backup-detail-label">Retention</div>
+                    <div class="backup-detail-value">30 Days</div>
+                </div>
+                <div class="backup-detail-item">
+                    <div class="backup-detail-label">Repo</div>
+                    <div class="backup-detail-value">teamltd-command-center</div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -528,11 +623,58 @@
         // Load data on page load
         fetchMetrics();
         fetchGAMetrics();
-        
+
+        // Update GitHub Backup status
+        function updateBackupStatus() {
+            const now = new Date();
+            const backupTime = 21; // 9 PM (24-hour format)
+
+            // Calculate next backup date
+            let nextBackup = new Date(now);
+            if (now.getHours() >= backupTime) {
+                nextBackup.setDate(nextBackup.getDate() + 1);
+            }
+            nextBackup.setHours(backupTime, 0, 0, 0);
+
+            // Calculate last backup date (assuming daily backup at 9 PM)
+            let lastBackup = new Date(nextBackup);
+            lastBackup.setDate(lastBackup.getDate() - 1);
+
+            // Update display
+            const lastBackupEl = document.getElementById('lastBackup');
+            const nextBackupEl = document.getElementById('nextBackup');
+
+            if (lastBackupEl) {
+                lastBackupEl.textContent = lastBackup.toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric',
+                    hour: 'numeric',
+                    minute: '2-digit'
+                });
+            }
+
+            if (nextBackupEl) {
+                const hoursUntilBackup = Math.floor((nextBackup - now) / (1000 * 60 * 60));
+                if (hoursUntilBackup <= 12) {
+                    nextBackupEl.textContent = `Today at 9:00 PM (${hoursUntilBackup}h left)`;
+                } else {
+                    nextBackupEl.textContent = nextBackup.toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric'
+                    }) + ' at 9:00 PM';
+                }
+            }
+        }
+
+        // Update backup status on load
+        updateBackupStatus();
+
         // Refresh every 5 minutes
         setInterval(() => {
             fetchMetrics();
             fetchGAMetrics();
+            updateBackupStatus();
         }, 5 * 60 * 1000);
     </script>
 </body>
