@@ -412,23 +412,9 @@
                 <span class="backup-status active" id="backupStatus">ACTIVE</span>
                 <span style="color: #666; font-size: 14px;">Automated daily backups at 9:00 PM EST</span>
             </div>
-            <div class="backup-details">
-                <div class="backup-detail-item">
-                    <div class="backup-detail-label">Last Backup</div>
-                    <div class="backup-detail-value recent" id="lastBackup">Mar 21, 2026 7:55 PM</div>
-                </div>
-                <div class="backup-detail-item">
-                    <div class="backup-detail-label">Next Backup</div>
-                    <div class="backup-detail-value pending" id="nextBackup">Tonight at 9:00 PM</div>
-                </div>
-                <div class="backup-detail-item">
-                    <div class="backup-detail-label">Retention</div>
-                    <div class="backup-detail-value">30 Days</div>
-                </div>
-                <div class="backup-detail-item">
-                    <div class="backup-detail-label">Repo</div>
-                    <div class="backup-detail-value">teamltd-command-center</div>
-                </div>
+
+            <div class="backup-details" id="backupContainer">
+                <!-- Backup status for each repo will be populated by JavaScript -->
             </div>
         </div>
     </div>
@@ -640,30 +626,73 @@
             let lastBackup = new Date(nextBackup);
             lastBackup.setDate(lastBackup.getDate() - 1);
 
-            // Update display
-            const lastBackupEl = document.getElementById('lastBackup');
-            const nextBackupEl = document.getElementById('nextBackup');
+            // Repository data
+            const repos = [
+                {
+                    name: 'teamltd-command-center',
+                    displayName: 'Command Center',
+                    size: '17MB',
+                    files: 'HTML, CSS, Netlify functions'
+                },
+                {
+                    name: 'openclaw-workspace',
+                    displayName: 'OpenClaw Workspace',
+                    size: '48KB',
+                    files: 'HEARTBEAT.md, MEMORY.md, AGENTS.md'
+                }
+            ];
 
-            if (lastBackupEl) {
-                lastBackupEl.textContent = lastBackup.toLocaleDateString('en-US', {
+            // Calculate countdown
+            const hoursUntilBackup = Math.floor((nextBackup - now) / (1000 * 60 * 60));
+            let nextBackupText;
+            if (hoursUntilBackup <= 12) {
+                nextBackupText = `Today at 9:00 PM (${hoursUntilBackup}h left)`;
+            } else {
+                nextBackupText = nextBackup.toLocaleDateString('en-US', {
                     month: 'short',
-                    day: 'numeric',
-                    year: 'numeric',
-                    hour: 'numeric',
-                    minute: '2-digit'
-                });
+                    day: 'numeric'
+                }) + ' at 9:00 PM';
             }
 
-            if (nextBackupEl) {
-                const hoursUntilBackup = Math.floor((nextBackup - now) / (1000 * 60 * 60));
-                if (hoursUntilBackup <= 12) {
-                    nextBackupEl.textContent = `Today at 9:00 PM (${hoursUntilBackup}h left)`;
-                } else {
-                    nextBackupEl.textContent = nextBackup.toLocaleDateString('en-US', {
-                        month: 'short',
-                        day: 'numeric'
-                    }) + ' at 9:00 PM';
-                }
+            // Build backup status for each repo
+            const backupContainer = document.getElementById('backupContainer');
+            if (backupContainer) {
+                let html = '';
+
+                // Add common info (Next Backup & Retention)
+                html += `
+                    <div class="backup-detail-item">
+                        <div class="backup-detail-label">Next Backup</div>
+                        <div class="backup-detail-value pending">${nextBackupText}</div>
+                    </div>
+                    <div class="backup-detail-item">
+                        <div class="backup-detail-label">Retention</div>
+                        <div class="backup-detail-value">30 Days</div>
+                    </div>
+                `;
+
+                // Add each repo's info
+                repos.forEach(repo => {
+                    html += `
+                        <div class="backup-detail-item" style="border-top: 1px solid #2a2a2a; padding-top: 12px; margin-top: 8px;">
+                            <div class="backup-detail-label">${repo.displayName}</div>
+                            <div class="backup-detail-value" style="font-size: 12px;">
+                                <div style="margin-bottom: 2px;">${repo.lastBackup ? repo.lastBackup : lastBackup.toLocaleDateString('en-US', {
+                                    month: 'short',
+                                    day: 'numeric',
+                                    year: 'numeric',
+                                    hour: 'numeric',
+                                    minute: '2-digit'
+                                })}</div>
+                                <div style="color: #666; font-size: 11px;">
+                                    ${repo.size} • ${repo.files}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                backupContainer.innerHTML = html;
             }
         }
 
