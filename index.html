@@ -278,6 +278,48 @@
             color: #999;
         }
 
+        .seo-rankings {
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #2a2a2a;
+        }
+
+        .seo-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .seo-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .seo-metric-group {
+            background: #0f0f0f;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #2a2a2a;
+        }
+
+        .seo-metric-label {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .seo-metric-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.4;
+        }
+
         .github-backup {
             background: #1a1a1a;
             border-radius: 12px;
@@ -402,6 +444,35 @@
         <div class="placeholder">
             <div class="placeholder-title">Coming Soon</div>
             <div>Instagram insights will display here</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">SEO Rankings (Week-over-Week)</div>
+        <div class="seo-rankings">
+            <div class="seo-header">
+                <span class="backup-status active">LIVE</span>
+                <span style="color: #666; font-size: 14px;">Tracking 17 keywords via Google Search Console</span>
+            </div>
+
+            <div class="seo-metrics" id="seoMetrics">
+                <div class="seo-metric-group">
+                    <div class="seo-metric-label">Top Movers (This Week)</div>
+                    <div class="seo-metric-value" id="seoTopMovers">Loading...</div>
+                </div>
+                <div class="seo-metric-group">
+                    <div class="seo-metric-label">Biggest Opportunities</div>
+                    <div class="seo-metric-value" id="seoOpportunities">Loading...</div>
+                </div>
+                <div class="seo-metric-group">
+                    <div class="seo-metric-label">Total Weekly Clicks</div>
+                    <div class="seo-metric-value positive" id="seoTotalClicks">-</div>
+                </div>
+            </div>
+
+            <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #333; color: #888; font-size: 13px;">
+                <strong>Next Update:</strong> <span id="seoNextUpdate">Monday, March 31 @ 9:00 AM EST</span>
+            </div>
         </div>
     </div>
 
@@ -609,6 +680,45 @@
         // Load data on page load
         fetchMetrics();
         fetchGAMetrics();
+        updateSEOStatus();
+
+        // Update SEO Rankings
+        async function updateSEOStatus() {
+            try {
+                // Fetch latest SEO data from Netlify function
+                const response = await fetch('/.netlify/functions/seo-rankings');
+                const data = await response.json();
+                
+                // Update top movers
+                if (data.topMovers && data.topMovers.length > 0) {
+                    const moversHTML = data.topMovers.map(m => 
+                        `<div style="margin-bottom: 5px;">↑ ${m.keyword}: +${Math.abs(m.change).toFixed(1)} positions</div>`
+                    ).join('');
+                    document.getElementById('seoTopMovers').innerHTML = moversHTML;
+                } else {
+                    document.getElementById('seoTopMovers').textContent = 'No significant changes';
+                }
+                
+                // Update opportunities
+                if (data.opportunities && data.opportunities.length > 0) {
+                    const oppsHTML = data.opportunities.map(o => 
+                        `<div style="margin-bottom: 5px;">${o.keyword}: ${o.impressions} imp, pos ${o.position}</div>`
+                    ).join('');
+                    document.getElementById('seoOpportunities').innerHTML = oppsHTML;
+                } else {
+                    document.getElementById('seoOpportunities').textContent = 'Monitoring...';
+                }
+                
+                // Update total clicks
+                document.getElementById('seoTotalClicks').textContent = data.totalClicks || '0';
+                
+            } catch (error) {
+                console.error('SEO data fetch failed:', error);
+                document.getElementById('seoTopMovers').textContent = 'Data unavailable';
+                document.getElementById('seoOpportunities').textContent = 'Data unavailable';
+                document.getElementById('seoTotalClicks').textContent = '-';
+            }
+        }
 
         // Update GitHub Backup status
         function updateBackupStatus() {
