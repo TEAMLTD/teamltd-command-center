@@ -465,8 +465,12 @@
                     <div class="seo-metric-value" id="seoOpportunities">Loading...</div>
                 </div>
                 <div class="seo-metric-group">
-                    <div class="seo-metric-label">Total Weekly Clicks</div>
+                    <div class="seo-metric-label">Total Clicks (This Week)</div>
                     <div class="seo-metric-value positive" id="seoTotalClicks">-</div>
+                </div>
+                <div class="seo-metric-group">
+                    <div class="seo-metric-label">Total Clicks (Last Week)</div>
+                    <div class="seo-metric-value" id="seoLastWeekClicks">-</div>
                 </div>
             </div>
 
@@ -711,6 +715,7 @@
                 
                 // Update total clicks
                 document.getElementById('seoTotalClicks').textContent = data.totalClicks || '0';
+                document.getElementById('seoLastWeekClicks').textContent = data.lastWeekClicks || '0';
                 
             } catch (error) {
                 console.error('SEO data fetch failed:', error);

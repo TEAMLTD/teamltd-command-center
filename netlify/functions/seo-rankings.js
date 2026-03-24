@@ -105,6 +105,9 @@ exports.handler = async function(event, context) {
     const totalClicks = Object.values(currentWeek)
       .reduce((sum, data) => sum + data.clicks, 0);
     
+    const lastWeekClicks = Object.values(prevWeek)
+      .reduce((sum, data) => sum + data.clicks, 0);
+    
     return {
       statusCode: 200,
       headers: {
@@ -115,6 +118,7 @@ exports.handler = async function(event, context) {
         topMovers: movers.slice(0, 3),
         opportunities: opportunities.slice(0, 3),
         totalClicks,
+        lastWeekClicks,
         lastUpdated: today.toISOString()
       })
     };
