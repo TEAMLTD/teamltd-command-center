@@ -1,7 +1,14 @@
-node_modules/
+# Sensitive Files
 .env
-.env.local
-*.log
-.DS_Store
+*.key
+*.pem
 service-account.json
+
+# Dependency directories
+node_modules/
+
+# Netlify
 .netlify/
+
+# Misc
+.DS_Store
