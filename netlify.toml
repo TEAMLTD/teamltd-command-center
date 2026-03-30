@@ -1,15 +1,22 @@
 [build]
+  command = "npm install"
   functions = "netlify/functions"
+  publish = "."
 
 [build.environment]
   NODE_VERSION = "18"
+  NPM_FLAGS = "--legacy-peer-deps"
 
-# Environment variables configuration
-# Set these in Netlify UI: Site settings > Environment variables
-# 
-# Required environment variables:
-# 1. GOOGLE_SERVICE_ACCOUNT (string) - Full JSON contents of service-account.json file
-#    Example: {"type":"service_account","project_id":"...","private_key_id":"..."}
-# 
-# 2. GA_PROPERTY_ID (string) - Google Analytics Property ID
-#    Value: 333133275
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[context.production.environment]
+  GA_PROPERTY_ID = "333133275"
+
+[context.deploy-preview.environment]
+  GA_PROPERTY_ID = "333133275"
+
+[context.branch-deploy.environment]
+  GA_PROPERTY_ID = "333133275"
