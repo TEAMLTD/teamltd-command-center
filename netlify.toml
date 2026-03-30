@@ -1,11 +1,10 @@
 [build]
-  command = "npm run build"
+  command = "npm install"
   functions = "netlify/functions"
   publish = "."
 
 [build.environment]
   NODE_VERSION = "18"
-  NPM_FLAGS = "--legacy-peer-deps"
 
 [[redirects]]
   from = "/*"
@@ -21,11 +20,3 @@
 
 [context.branch-deploy.environment]
   GA_PROPERTY_ID = "333133275"
-
-# Add function dependencies
-[[plugins]]
-  package = "@netlify/plugin-functions-core"
-
-# Specific function configuration
-[[plugins]]
-  package = "netlify-plugin-inline-functions-env"
