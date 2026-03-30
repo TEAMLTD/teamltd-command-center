@@ -3,6 +3,24 @@
   "version": "1.0.0",
   "description": "TEAMLTD Command Center Dashboard",
   "dependencies": {
-    "axios": "^0.27.2"
-  }
+    "axios": "^0.27.2",
+    "googleapis": "^171.4.0"
+  },
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TEAMLTD/teamltd-command-center.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/TEAMLTD/teamltd-command-center/issues"
+  },
+  "homepage": "https://github.com/TEAMLTD/teamltd-command-center#readme"
 }
