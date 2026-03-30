@@ -16,10 +16,6 @@
   META_ADS_ACCOUNT_ID = "act_23302665"
   SHOPIFY_SHOP_DOMAIN = "teamltd.myshopify.com"
 
-[plugins]
-  [[plugins.inputs]]
-    package = "@netlify/plugin-functions-core"
-
 [[headers]]
   for = "/*"
   [headers.values]
