@@ -4,12 +4,16 @@
   "description": "TEAMLTD Command Center Dashboard",
   "dependencies": {
     "axios": "^0.27.2",
+    "dotenv": "^16.0.3",
     "googleapis": "^171.4.0"
   },
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "echo 'No build step needed'",
+    "start": "npx netlify-cli serve",
+    "predeploy": "npm install",
+    "deploy": "netlify deploy --prod"
   },
   "repository": {
     "type": "git",
@@ -22,5 +26,9 @@
   "bugs": {
     "url": "https://github.com/TEAMLTD/teamltd-command-center/issues"
   },
-  "homepage": "https://github.com/TEAMLTD/teamltd-command-center#readme"
+  "homepage": "https://github.com/TEAMLTD/teamltd-command-center#readme",
+  "devDependencies": {
+    "netlify-cli": "^24.8.1",
+    "netlify-plugin-inline-functions-env": "^1.0.9"
+  }
 }

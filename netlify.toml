@@ -1,5 +1,5 @@
 [build]
-  command = "npm install"
+  command = "npm run build"
   functions = "netlify/functions"
   publish = "."
 
@@ -21,3 +21,11 @@
 
 [context.branch-deploy.environment]
   GA_PROPERTY_ID = "333133275"
+
+# Add function dependencies
+[[plugins]]
+  package = "@netlify/plugin-functions-core"
+
+# Specific function configuration
+[[plugins]]
+  package = "netlify-plugin-inline-functions-env"
